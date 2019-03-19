@@ -29,7 +29,10 @@ export default class Index extends React.Component {
                 />
                 <div>
                     <h1>Smart Contract guide</h1>
-                    <h3>How to use factory smart contract.</h3>
+                    <p>- Account address is the default parameters for all calls.</p>
+                    <p>- All return values are promise object</p>
+                    <p>- The call function is a simple read function, and no gas is consumed and results are returned immediately.</p>
+                    <p>- The send function is a write function, which uses gas to run and takes time to write to the block.</p>
                 </div>
                 {
                     list.map(label => {
@@ -53,6 +56,8 @@ export default class Index extends React.Component {
                                                 code={obj.code}
                                                 permission={obj.permission}
                                                 connect={obj.connect}
+                                                param={obj.param}
+                                                returnValue={obj.returnValue}
                                             />
                                         )
                                     })
@@ -73,6 +78,11 @@ const Wrapper = styled.div`
 `
 
 const Content = styled.div`
-
+    
     margin-top : 50px;
+    
+    h1 {
+        font-weight: 900;
+        letter-spacing : 2px;
+    }
 `

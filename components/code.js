@@ -14,7 +14,7 @@ export default class Code extends React.Component {
     };
 
     render() {
-        const {title, call, code, permission, connect} = this.props;
+        const {title, call, code, permission, connect, param, returnValue} = this.props;
         const {result} = this.state;
         return (
             <Wrapper>
@@ -35,9 +35,65 @@ export default class Code extends React.Component {
                 </Permission>
 
                 {
+                    param && <Param>
+                        <h4>Parameter</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th width="15%">Field</th>
+                                <th width="15%">Type</th>
+                                <th width="70%">Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    param.map(par => {
+                                        return (
+                                            <tr key={par.name}>
+                                                <td>{par.name}</td>
+                                                <td>{par.type}</td>
+                                                <td>{par.description}</td>
+                                            </tr>
+                                    )
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </Param>
+                }
+
+                {
+                    returnValue && <Param>
+                        <h4>Response</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th width="15%">Field</th>
+                                <th width="15%">Type</th>
+                                <th width="70%">Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                returnValue.map(par => {
+                                    return (
+                                        <tr key={par.name}>
+                                            <td>{par.name}</td>
+                                            <td>{par.type}</td>
+                                            <td>{par.description}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </tbody>
+                        </table>
+                    </Param>
+                }
+
+                {
                     connect && <Example>
                         <button type="button" onClick={() => connect().then(result => this.setState({result}))}>Click for test</button>
-                        <p>Result</p>
+                        <p>Result :</p>
                         {
                             result && (typeof result === 'string' ? <ExampleLine>
                                     {result}
@@ -84,7 +140,8 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
     margin-top : 60px;
-    font-size: 18px;
+    font-size: 22px;
+    font-weight: bold;
 `
 
 const Type = styled.div`
@@ -117,7 +174,7 @@ const Method = styled.div`
 
 const Permission = styled.div`
     color : gray;
-    margin-top : 20px;
+    margin-top : 10px;
 `
 
 const Example = styled.div`
@@ -151,3 +208,23 @@ const ExampleLine = styled.div`
     }
 `
 
+const Param = styled.div`
+    width: 100%;
+    margin-top : 30px;
+    table {
+        width: 100%;
+        text-align : left;
+        border: 1px solid #404040;
+        border-collapse: collapse;
+        
+        th, td {
+            border : 1px solid #404040;
+            height: 30px;
+            text-indent : 10px;
+        }
+        
+        th {
+            background : #eee;
+        }
+    }
+`
