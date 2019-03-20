@@ -1,4 +1,4 @@
-# Factory-example
+# My smart contract guide
 I used Kovan network
 
 ## Start
