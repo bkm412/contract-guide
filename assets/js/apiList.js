@@ -1,6 +1,6 @@
 import Code from "../../pages";
 import React from "react";
-import { getFactoryID, getFactoryInfo, getChimneyInfo, getRecordData } from './web3';
+import { getFactoryID, getFactoryInfo, getChimneyInfo, getRecordData, editFactoryInfo, addChimney, editChimney, addPara, editPara, addData } from './web3';
 
 
 const list = [
@@ -112,6 +112,7 @@ const list = [
                 call : "send",
                 code : "Contract.methods.EditFactoryInfo(<span>*name</span>, <span>*location</span>, <span>*detail</span>).send({ from : <span>*accountAddress</span> })",
                 permission :"Owner of Each Factory",
+                connect : editFactoryInfo,
                 param : [
                     {
                         name : 'name',
@@ -181,6 +182,7 @@ const list = [
                 call : "send",
                 code : "Contract.methods.AddChimney(<span>*name</span>, <span>*location</span>, <span>*detail</span>).send({ from : <span>*accountAddress</span> })",
                 permission :"Owner of Each Factory",
+                connect : addChimney,
                 param : [
                     {
                         name : "name",
@@ -205,6 +207,7 @@ const list = [
                 call : "send",
                 code : "Contract.methods.EditChimneyInfo(<span>*chimneyId</span>,<span>*name</span>, <span>*location</span>, <span>*detail</span>).send({ from : <span>*accountAddress</span> })",
                 permission :"Owner of Each Factory",
+                connect : editChimney,
                 param : [
                     {
                         name : "chimneyId",
@@ -238,6 +241,7 @@ const list = [
                 call : "send",
                 code : "Contract.methods.AddParaToChimney(<span>*chimneyId</span>, <span>*paraN</span>).send({ from : <span>*accountAddress</span> })",
                 permission :"Owner of Each Factory",
+                connect : addPara,
                 param : [
                     {
                         name : "chimneyId",
@@ -256,6 +260,7 @@ const list = [
                 call : "send",
                 code : "Contract.methods.WriteNameToPara(<span>*chimneyId</span>, <span>*paraN</span>, <span>*paraName</span>).send({ from : <span>*accountAddress</span> })",
                 permission :"Owner of Each Factory",
+                connect : editPara,
                 param : [
                     {
                         name : "chimneyId",
@@ -324,8 +329,9 @@ const list = [
             {
                 title :"Record Data",
                 call : "send",
-                code : "Contract.methods.WriteNameToPara(<span>*chimneyId</span>, <span>*paraId</span>, <span>*data</span>).send({ from : <span>*accountAddress</span> })",
+                code : "Contract.methods.RecordData(<span>*chimneyId</span>, <span>*paraId</span>, <span>*data</span>).send({ from : <span>*accountAddress</span> })",
                 permission :"Owner of Each Factory",
+                connect : addData,
                 param : [
                     {
                         name : "chimneyId",

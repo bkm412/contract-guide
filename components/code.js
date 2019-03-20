@@ -10,12 +10,23 @@ export default class Code extends React.Component {
     }
 
     state = {
-        result : ''
+        result : '',
+        params : {},
+        pending : false
+    };
+
+    handleInputChange = (e,index) => {
+        this.setState({
+            params : {
+                ...this.state.params,
+                [index] : e.target.value
+            }
+        })
     };
 
     render() {
         const {title, call, code, permission, connect, param, returnValue} = this.props;
-        const {result} = this.state;
+        const {result, params, pending} = this.state;
         return (
             <Wrapper>
                 <Title
@@ -89,11 +100,38 @@ export default class Code extends React.Component {
                         </table>
                     </Param>
                 }
-
+                {
+                    param && <Test>
+                        <h4>Input parameter for test</h4>
+                        {
+                            param.map((obj,index) => {
+                                return (
+                                    <div className="inputDiv" key={obj.name}>
+                                        <label>{obj.name}</label><input type="text" value={params[index] || ''} onChange={(e) => this.handleInputChange(e,index)}/>
+                                    </div>
+                                )
+                            })
+                        }
+                    </Test>
+                }
                 {
                     connect && <Example>
-                        <button type="button" onClick={() => connect().then(result => this.setState({result}))}>Click for test</button>
+                        <button type="button" onClick={() => {
+                            if(param && (Object.values(params).length !== param.length)){
+                                alert('입력항목을 모두 채워주세요')
+                                return;
+                            }
+                            this.setState({
+                                params : {},
+                                pending : true
+                            });
+                            connect(params).then(result => this.setState({result, pending : false}));
+
+                        }}>Click for test</button>
                         <p>Result :</p>
+                        {
+                            pending && <ExampleLine>Loading ... </ExampleLine>
+                        }
                         {
                             result && (typeof result === 'string' ? <ExampleLine>
                                     {result}
@@ -120,6 +158,7 @@ export default class Code extends React.Component {
 
                     </Example>
                 }
+
             </Wrapper>
         )
 
@@ -225,6 +264,21 @@ const Param = styled.div`
         
         th {
             background : #eee;
+        }
+    }
+`
+
+const Test = styled.div`
+    .inputDiv {
+        height: 40px;
+        label {
+            width: 120px;
+            display: inline-block;
+        }
+        input {
+            width: 500px;
+            height: 25px;
+            border-radius: 5px;
         }
     }
 `
