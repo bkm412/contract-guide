@@ -1,7 +1,5 @@
 # My smart contract guide
-I used Kovan network
-
-Link: [Example](http://15.164.32.51)
+ used Kovan network
 
 ## Start
 
